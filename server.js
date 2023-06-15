@@ -1,8 +1,14 @@
 import express from 'express'
+import cors from 'cors'
+
 const server=express()
 const port=process.env.PORT || '3000'
 import web from './routes/web.js'
 
+const core1=express();
+core1.use(cors({
+    origin:["http://localhost:3000/"]
+}))
 
 // Static Files
 server.use(express.static('./assets'))

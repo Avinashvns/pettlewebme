@@ -330,7 +330,7 @@ if ($("#pageWrapper").hasClass("compact-wrapper")) {
       if (current.indexOf(link) != -1) {
         $(this).parents().children("a").addClass("active");
         $(this).parents().parents().children("ul").css("display", "block");
-        $(this).addClass("active");
+        $(this).addClass7("active");
         $(this)
           .parent()
           .parent()
