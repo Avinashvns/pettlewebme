@@ -1,5 +1,5 @@
 const loginController=(req,res)=>{
-    res.render('login');
+    res.render('index');
     // res.redirect('index');
 }
 

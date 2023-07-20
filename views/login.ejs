@@ -125,11 +125,13 @@
         let password = document.getElementById('pwd').value;
         console.log(email + " " + password);
 
-        // const url = 'http://20.163.238.153/api/method/login'; // Replace with your API endpoint URL
-        const url='http://localhost:3000/user/login';
+        const url = 'http://20.163.238.153/api/method/login'; // Replace with your API endpoint URL
+        // const url='http://localhost:3000/user/login';
         const data = {
-          userName: email,
-          password: password
+          usr:email,
+          pwd:password
+          // userName: email,
+          // password: password
         };// Replace with the data you want to send in the POST request
         console.log("Data:-" + data);
 
@@ -148,10 +150,15 @@
           .then(data => {
             console.log('Response:', data);
             // Do something with the response data
-            if(data.success){
-              window.location.href("/login");
+            console.log('resp:-', data.home_page);
+            console.log('my data :-',data.full_name);
+
+            if(data.full_name== "UserName LastName"){
+              console.log("run");
+              window.location.href="/login";
             }else{
-              // window.location.href("/login");
+              console.log("not");
+              windows.location.href('/');
             }
           })
           .catch(error => {
