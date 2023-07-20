@@ -125,16 +125,17 @@
         let password = document.getElementById('pwd').value;
         console.log(email + " " + password);
 
-        const url = 'http://20.163.238.153/api/method/login'; // Replace with your API endpoint URL
+        // const url = 'http://20.163.238.153/api/method/login'; // Replace with your API endpoint URL
+        const url='http://localhost:3000/user/login';
         const data = {
-          usr: email,
-          pwd: password
-        }; // Replace with the data you want to send in the POST request
+          userName: email,
+          password: password
+        };// Replace with the data you want to send in the POST request
         console.log("Data:-" + data);
 
         const options = {
           method: 'POST',
-          mode: 'no-cors',//adding this function :- cors
+          mode: 'cors',//adding this function :- cors
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -147,6 +148,11 @@
           .then(data => {
             console.log('Response:', data);
             // Do something with the response data
+            if(data.success){
+              window.location.href("/login");
+            }else{
+              // window.location.href("/login");
+            }
           })
           .catch(error => {
             console.error('Error:', error);
