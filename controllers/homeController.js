@@ -1,5 +1,5 @@
 const homeController=(req,res)=>{
-    res.render('login')
+    res.render('index')
 }
 
 export {homeController}
