@@ -12,6 +12,7 @@ db.getDoc('Leads', 'Leads')
   .then((doc) => console.log(doc))
   .catch((error) => console.error(error));  
 }
+
 const homeController=(req,res)=>{
     res.render('index')
 }
