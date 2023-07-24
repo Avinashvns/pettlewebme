@@ -1,7 +1,7 @@
 import { FrappeApp } from 'frappe-js-sdk';
 const frappe = new FrappeApp('http://20.163.238.153');
 const db = frappe.db();
-const loggedin= async  (req,res)=>{ 
+\
 const auth = await frappe.auth();
 auth
   .getLoggedInUser()
@@ -11,7 +11,7 @@ auth
 db.getDoc('Leads', 'Leads')
   .then((doc) => console.log(doc))
   .catch((error) => console.error(error));  
-}
+
 const homeController=(req,res)=>{
     res.render('index')
 }
