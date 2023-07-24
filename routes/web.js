@@ -1,9 +1,8 @@
 import express from 'express'
 const router=express.Router()
-
 import { homeController } from '../controllers/homeController.js'
 import { bookingController } from '../controllers/bookingController.js'
-import { loginController } from '../controllers/loginController.js'
+import { loginController,login } from '../controllers/loginController.js'
 import { registerController } from '../controllers/registerController.js'
 import { forgotpasswordController } from '../controllers/forgotpasswordController.js'
 import { calendarController } from '../controllers/calendarController.js'
@@ -15,6 +14,7 @@ import {clientnewController} from '../controllers/clientnewController.js'
 
 
 // define Routes
+router.post('/createuser',login)
 router.get('/',homeController)
 router.get('/login', loginController)
 router.get('/register', registerController)
