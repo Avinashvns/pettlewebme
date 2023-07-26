@@ -20,13 +20,7 @@ const data = {
     .catch((error) => console.error(error));
 }
 
-const loginController=(req,res)=>{
-  
-   
-        
-        
- 
-    
+const loginController=(req,res)=>{    
     res.render('login',)
 }
 
