@@ -543,11 +543,12 @@
                   </div>
                   <div class="collapse show" id="collapseTwo" aria-labelledby="headingTwo"
                     data-bs-parent="#accordionExample">
+                   
                     <div class="card-body social-status filter-cards-view">
                       <div class="media">
                         <img class="img-50 rounded-circle m-r-15" src="/images/user/2.png" alt="">
                         <!-- <div class="social-status social-online"></div> -->
-                        <div class="media-body col-lg-9 col-md-8 "><span class="f-w-600 d-block">Jane & Monk</span><span
+                        <div class="media-body col-lg-9 col-md-8 " id ="newleads" name="newleads><span class="f-w-600 d-block">Jane & Monk</span><span
                             class="d-block"><i class="icofont icofont-ui-call"></i> 9191919191</span><span
                             class="d-block">10 minutes ago</span>
                         </div>
@@ -648,8 +649,8 @@
                       </div>
                       </br>
                       <div class="col">
-                        <button class="btn btn-danger col-sm-6 col-lg-4 text-center mb-2">Reject</button>
-                        <button class="btn btn-primary col-md-6 col-lg-7 text-center">Onboard & Confirm</button>
+                        <button class="btn btn-danger col-sm-6 col-lg-4 text-center mb-2" id="reject" onclick="handleReject">Reject</button>
+                        <button class="btn btn-primary col-md-6 col-lg-7 text-center" id="onboard" onclick="handleOnboard" >Onboard & Confirm</button>
                       </div>
                       <br>
                       <!-- <div class="container-lg text-end">
@@ -752,6 +753,50 @@
       </footer>
     </div>
   </div>
+  <script>
+   function handleOnboard(){
+    let validationCustom0 = document.getElementById('validationCustom0').value;
+    let validationCustom01 = document.getElementById('validationCustom01').value;
+    let validationCustom02 = document.getElementById('validationCustom02').value;
+    let validationCustom03 = document.getElementById('validationCustom03').value;
+    let validationCustom04 = document.getElementById('validationCustom04').value;
+  }
+const cookieString = document.cookie || '';
+
+  // Check if the cookie you need is available in the 'cookies' object
+const url = "/createuser";
+const options = {
+  method: 'GET',
+  mode: 'cors',
+  
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+   'Cookie': cookieString, 
+
+  }
+};
+  
+fetch(url, options)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Response from server:', data);
+    // Assuming the server returns the leads data in the response
+   // const lead = data.newleads;
+    const lead = data.data[0].name;
+    console.log('Lead data from server:', lead);
+    // Do something with the lead data
+    // For example, you can update the UI with the received data
+    document.getElementById('newleads').value = lead;
+    newleads.innerText = `Lead Name: ${lead}`;
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle any errors that occurred during the request
+  });
+  
+
+  </script>
   <!-- latest jquery-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Bootstrap js-->
