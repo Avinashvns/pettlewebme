@@ -53,6 +53,7 @@ const login= async (req,res)=>{
     // Check if the cookie you need is available in the 'cookies' object
     if (cookieString) {
 
+
        const response = await axios.get('http://172.190.62.52/api/resource/Lead', {
         headers: {
           'Accept': 'application/json',
@@ -77,6 +78,10 @@ const login= async (req,res)=>{
 const loginController=(req,res)=>{
 
    res.render('login')
+
+const loginController=(req,res)=>{    
+    res.render('login',)
+
 }
 
 export { loginController ,login, leads }
