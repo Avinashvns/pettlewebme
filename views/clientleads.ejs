@@ -544,12 +544,12 @@
                   <div class="collapse show" id="collapseTwo" aria-labelledby="headingTwo"
                     data-bs-parent="#accordionExample">
                    
-                    <div class="card-body social-status filter-cards-view">
-                      <div class="media">
+                    <div class="card-body social-status filter-cards-view"  >
+                      <div class="media"  >
                         <img class="img-50 rounded-circle m-r-15" src="/images/user/2.png" alt="">
                         <!-- <div class="social-status social-online"></div> -->
-                        <div class="media-body col-lg-9 col-md-8 " id ="newleads" name="newleads><span class="f-w-600 d-block">Jane & Monk</span><span
-                            class="d-block"><i class="icofont icofont-ui-call"></i> 9191919191</span><span
+                        <div class="media-body col-lg-9 col-md-8 "id ="newleads" ><span class="f-w-600 d-block">Jane & Monk</span><span
+                            class="d-block" ><i class="icofont icofont-ui-call"></i> 9191919191</span><span
                             class="d-block">10 minutes ago</span>
                         </div>
                         <div class="media-body col-lg-3 col-md-4 text-end">
@@ -776,24 +776,60 @@ const options = {
 
   }
 };
-  
+
 fetch(url, options)
   .then(response => response.json())
   .then(data => {
     console.log('Response from server:', data);
-    // Assuming the server returns the leads data in the response
-   // const lead = data.newleads;
-    const lead = data.data[0].name;
-    console.log('Lead data from server:', lead);
-    // Do something with the lead data
-    // For example, you can update the UI with the received data
-    document.getElementById('newleads').value = lead;
-    newleads.innerText = `Lead Name: ${lead}`;
+
+    // Assuming the server returns the leads data in the response as an array
+    const leads = data.data;
+
+    console.log('Lead data from server:', leads);
+
+    // Get the div where you want to display the leads
+    const newleadsDiv = document.getElementById('newleads');
+
+    // Clear the div to remove any previous content
+    newleadsDiv.innerHTML = '';
+
+    // Create an unordered list to hold the leads
+    const ul = document.createElement('ul');
+
+    // Iterate through the leads and create list items to display each lead
+    leads.forEach(leadObj => {
+      const leadName = leadObj.name;
+      // Create a list item for each lead
+      const li = document.createElement('li');
+      li.innerText = `Lead Name: ${leadName}`;
+
+      // Add the list item to the unordered list
+      ul.appendChild(li);
+    });
+
+    // Add the unordered list with all leads to the div
+    newleadsDiv.appendChild(ul);
   })
   .catch(error => {
     console.error('Error:', error);
     // Handle any errors that occurred during the request
   });
+  
+// fetch(url, options)
+//   .then(response => response.json())
+//   .then(data => {
+//           console.log('Response from server:', data);
+//             // Assuming the server returns the leads data in the response
+//             // const lead = data.newleads;
+//             const lead = data.data[0].name;
+//            console.log('Lead data from server:', lead);
+//          document.getElementById('newleads').value = lead;
+//          newleads.innerText = `Lead Name: ${lead}`;
+//   })
+//   .catch(error => {
+//     console.error('Error:', error);
+//     // Handle any errors that occurred during the request
+//   });
   
 
   </script>
