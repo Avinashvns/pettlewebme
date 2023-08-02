@@ -543,19 +543,9 @@
                   </div>
                   <div class="collapse show" id="collapseTwo" aria-labelledby="headingTwo"
                     data-bs-parent="#accordionExample">
-                   
-                    <div class="card-body social-status filter-cards-view"  >
-                      <div class="media"  >
-                        <img class="img-50 rounded-circle m-r-15" src="/images/user/2.png" alt="">
-                        <!-- <div class="social-status social-online"></div> -->
-                        <div class="media-body col-lg-9 col-md-8 "id ="newleads" ><span class="f-w-600 d-block">Jane & Monk</span><span
-                            class="d-block" ><i class="icofont icofont-ui-call"></i> 9191919191</span><span
-                            class="d-block">10 minutes ago</span>
-                        </div>
-                        <div class="media-body col-lg-3 col-md-4 text-end">
-                          <span class="f-w-600 text-success ">$200.00</span>
-                        </div>
-                      </div>
+
+                    <div class="card-body social-status filter-cards-view">
+                      <div id="newleads"></div>
                       <div class="media"><img class="img-50 rounded-circle m-r-15" src="/images/user/8.jpg" alt="">
                         <!-- <div class="social-status social-busy"></div> -->
                         <div class="media-body col-lg-9 col-md-6"><span class="f-w-600 d-block">Brooklyn & Monk
@@ -569,8 +559,8 @@
                       <div class="media"><img class="img-50 rounded-circle m-r-15" src="/images/user/4.jpg" alt="">
                         <!-- <div class="social-status social-busy"></div> -->
                         <div class="media-body col-lg-9 col-md-6"><span class="f-w-600 d-block">Leslie & Monk
-                          </span><span class="d-block"><i class="icofont icofont-ui-call"></i> 9191717171</span><span
-                            class="d-block">2 hours ago</span></div>
+                          </span><span class="d-block"><i class="icofont icofont-ui-call"></i> 9191717171</span>
+                          <span class="d-block">2 hours ago</span></div>
                         <div class="media-body col-lg-3 col-md-6 text-end">
                           <span class="f-w-600 text-success ">$300.00</span>
                         </div>
@@ -649,8 +639,10 @@
                       </div>
                       </br>
                       <div class="col">
-                        <button class="btn btn-danger col-sm-6 col-lg-4 text-center mb-2" id="reject" onclick="handleReject">Reject</button>
-                        <button class="btn btn-primary col-md-6 col-lg-7 text-center" id="onboard" onclick="handleOnboard" >Onboard & Confirm</button>
+                        <button class="btn btn-danger col-sm-6 col-lg-4 text-center mb-2" id="reject"
+                          onclick="handleReject">Reject</button>
+                        <button class="btn btn-primary col-md-6 col-lg-7 text-center" id="onboard"
+                          onclick="handleOnboard">Onboard & Confirm</button>
                       </div>
                       <br>
                       <!-- <div class="container-lg text-end">
@@ -754,30 +746,31 @@
     </div>
   </div>
   <script>
-   function handleOnboard(){
-    let validationCustom0 = document.getElementById('validationCustom0').value;
-    let validationCustom01 = document.getElementById('validationCustom01').value;
-    let validationCustom02 = document.getElementById('validationCustom02').value;
-    let validationCustom03 = document.getElementById('validationCustom03').value;
-    let validationCustom04 = document.getElementById('validationCustom04').value;
-  }
-const cookieString = document.cookie || '';
+    function handleOnboard() {
+      let validationCustom0 = document.getElementById('validationCustom0').value;
+      let validationCustom01 = document.getElementById('validationCustom01').value;
+      let validationCustom02 = document.getElementById('validationCustom02').value;
+      let validationCustom03 = document.getElementById('validationCustom03').value;
+      let validationCustom04 = document.getElementById('validationCustom04').value;
+    }
+    const cookieString = document.cookie || '';
 
-  // Check if the cookie you need is available in the 'cookies' object
+// Check if the cookie you need is available in the 'cookies' object
 const url = "/createuser";
 const options = {
-  method: 'GET',
-  mode: 'cors',
-  
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-   'Cookie': cookieString, 
+method: 'GET',
+mode: 'cors',
 
-  }
+headers: {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+ 'Cookie': cookieString, 
+
+}
 };
 
-fetch(url, options)
+
+ fetch(url, options)
   .then(response => response.json())
   .then(data => {
     console.log('Response from server:', data);
@@ -789,48 +782,59 @@ fetch(url, options)
 
     // Get the div where you want to display the leads
     const newleadsDiv = document.getElementById('newleads');
-
     // Clear the div to remove any previous content
     newleadsDiv.innerHTML = '';
 
-    // Create an unordered list to hold the leads
-    const ul = document.createElement('ul');
-
-    // Iterate through the leads and create list items to display each lead
+    // Iterate through the leads and create media div for each lead
     leads.forEach(leadObj => {
-      const leadName = leadObj.name;
-      // Create a list item for each lead
-      const li = document.createElement('li');
-      li.innerText = `Lead Name: ${leadName}`;
-
-      // Add the list item to the unordered list
-      ul.appendChild(li);
+      const phone = leadObj.phone_number;
+      const patient = leadObj.patient;
+      const appointmentDate = leadObj.appointment_date;
+      
+      // Create the outer media div
+      const mediaDiv = document.createElement('div');
+      mediaDiv.classList.add('media');
+      
+      // Create the media body for patient and phone number
+      const mediaBody1 = document.createElement('div');
+      mediaBody1.classList.add('media-body', 'col-lg-9', 'col-md-6');
+      
+      const patientSpan = document.createElement('span');
+      patientSpan.classList.add('f-w-600', 'd-block');
+      patientSpan.innerText = patient;
+      
+      const phoneSpan = document.createElement('span');
+      phoneSpan.classList.add('d-block');
+      phoneSpan.innerHTML = `<i class="icofont icofont-ui-call"></i> ${phone}`;
+      
+      mediaBody1.appendChild(patientSpan);
+      mediaBody1.appendChild(phoneSpan);
+      
+      // Create the media body for appointment date
+      const mediaBody2 = document.createElement('div');
+      mediaBody2.classList.add('media-body', 'col-lg-3', 'col-md-6', 'text-end');
+      
+      const dateSpan = document.createElement('span');
+      dateSpan.classList.add('f-w-600', 'text-success');
+      dateSpan.innerText = appointmentDate;
+      
+      mediaBody2.appendChild(dateSpan);
+      
+      // Append both media bodies to the media div
+      mediaDiv.appendChild(mediaBody1);
+      mediaDiv.appendChild(mediaBody2);
+      
+      // Add the media div to the unordered list
+      newleadsDiv.appendChild(mediaDiv);
     });
-
-    // Add the unordered list with all leads to the div
-    newleadsDiv.appendChild(ul);
   })
   .catch(error => {
     console.error('Error:', error);
     // Handle any errors that occurred during the request
   });
-  
-// fetch(url, options)
-//   .then(response => response.json())
-//   .then(data => {
-//           console.log('Response from server:', data);
-//             // Assuming the server returns the leads data in the response
-//             // const lead = data.newleads;
-//             const lead = data.data[0].name;
-//            console.log('Lead data from server:', lead);
-//          document.getElementById('newleads').value = lead;
-//          newleads.innerText = `Lead Name: ${lead}`;
-//   })
-//   .catch(error => {
-//     console.error('Error:', error);
-//     // Handle any errors that occurred during the request
-//   });
-  
+
+   
+
 
   </script>
   <!-- latest jquery-->
