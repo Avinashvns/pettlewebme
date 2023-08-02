@@ -1,20 +1,16 @@
-import { FrappeApp } from 'frappe-js-sdk';
-const frappe = new FrappeApp('http://20.163.238.153');
-const db = frappe.db();
-const loggedin= async  (req,res)=>{ 
-const auth = await frappe.auth();
-auth
-  .getLoggedInUser()
-  .then((user) => console.log(`User ${user} is logged in.`))
-  .catch((error) => console.error(error));
+ const homeController=(req,res)=>{
+    
+    const data = {
+        name: 'johan', // Replace this with dynamic data from your application
+        Available:'11',
+        Occupied:'112',
+        Booking_Requests:'12,09',
+        New_Client_Enquiries:'15,080',
+        Onboarded_Clients:'12,564',
+        Payments:'12345',
+      };
 
-db.getDoc('Leads', 'Leads')
-  .then((doc) => console.log(doc))
-  .catch((error) => console.error(error));  
-}
-
-const homeController=(req,res)=>{
-    res.render('index')
+    res.render('index',data)
 }
 
 export {homeController}
