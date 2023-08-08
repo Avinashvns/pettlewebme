@@ -573,13 +573,14 @@
                 <!-- Card header-->
                 <div class="card">
                   <div class="social-btngroup d-flex">
-                    <button class="btn btn-primary text-center" type="button">All Clients</button>
-                    <button class="btn btn-light text-center ms-2" type="button">New Clients</button>
-                    <button class="btn btn-light text-center" type="button">Rejected</button>
+                    <button class="btn btn-primary text-center" type="button"onclick="setActiveButton(this)">All Clients</button>
+                    <button class="btn btn-light text-center ms-2" type="button"onclick="setActiveButton(this)">New Clients</button>
+                    <button class="btn btn-light text-center" type="button"onclick="setActiveButton(this)">Rejected</button>
                   </div>
                   <div class="collapse show" id="collapseTwo" aria-labelledby="headingTwo"
                     data-bs-parent="#accordionExample">
                     <div class="card-body social-status filter-cards-view">
+                      <div id="newleads"></div>
                       <div class="media ">
                         <img class="img-50 rounded-circle m-r-15" src="/images/user/2.png" alt="">
                         <!-- <div class="social-status social-online"></div> -->
@@ -693,17 +694,17 @@
                     <div class="row g-3">
                       <h5>Pet Details</h5><br>
                       <div class="col-md-4">
-                        <label class="form-label" for="validationCustom01">
+                        <label class="form-label" for="validationCustom04">
                           <h6>Pet Name</h6>
                         </label>
-                        <input class="form-control" id="validationCustom01" type="text" value="" required="">
+                        <input class="form-control" id="validationCustom04" type="text" value="" required="">
                         <div class="valid-feedback">Looks good!</div>
                       </div>
                       <div class="col-md-4">
-                        <label class="form-label" for="validationCustom02">
+                        <label class="form-label" for="validationCustom05">
                           <h6>Pet Type</h6>
                         </label>
-                        <input class="form-control" id="validationCustom02" type="text" value="" required="">
+                        <input class="form-control" id="validationCustom05" type="text" value="" required="">
                         <div class="valid-feedback">Looks good!</div>
                       </div>
                     </div>
@@ -711,21 +712,21 @@
                     <!-- Age -->
                     <div class="row g-3">
                       <div class="col-md-4">
-                        <label class="form-label" for="validationCustom01">
+                        <label class="form-label" for="validationCustom06">
                           <h6>Age (Years)</h6>
                         </label>
-                        <input class="form-control" id="validationCustom01" type="text" value="" required="">
+                        <input class="form-control" id="validationCustom06" type="text" value="" required="">
                         <div class="valid-feedback">Looks good!</div>
                       </div>
                       <div class="col-md-4">
-                        <label class="form-label" for="validationCustom02">
+                        <label class="form-label" for="validationCustom07">
                           <h6>Age (Months)</h6>
                         </label>
-                        <input class="form-control" id="validationCustom02" type="text" value="" required="">
+                        <input class="form-control" id="validationCustom07" type="text" value="" required="">
                         <div class="valid-feedback">Looks good!</div>
                       </div>
                       <div class="col-md-4">
-                        <label class="form-label" for="validationCustom02">
+                        <label class="form-label" for="validationCustom08">
                           <h6>Age</h6>
                         </label>
                         <!-- <input class="form-control" id="validationCustom02" type="text" value="" required="">
@@ -736,17 +737,17 @@
                     <!-- Breed col -->
                     <div class="row g-3">
                       <div class="col-md-4">
-                        <label class="form-label" for="validationCustom01">
+                        <label class="form-label" for="validationCustom09">
                           <h6>Breed</h6>
                         </label>
-                        <input class="form-control" id="validationCustom01" type="text" value="" required="">
+                        <input class="form-control" id="validationCustom09" type="text" value="" required="">
                         <div class="valid-feedback">Looks good!</div>
                       </div>
                       <div class="col-md-4">
-                        <label class="form-label" for="validationCustom02">
+                        <label class="form-label" for="validationCustom10">
                           <h6>Gender</h6>
                         </label>
-                        <input class="form-control" id="validationCustom02" type="text" value="" required="">
+                        <input class="form-control" id="validationCustom10" type="text" value="" required="">
                         <div class="valid-feedback">Looks good!</div>
                       </div>
                       <div class="col-md-4">
@@ -933,6 +934,102 @@
     </div>
   </div>
   <!-- latest jquery-->
+  <script>
+    function setActiveButton(clickedButton) {
+  const buttons = document.getElementsByClassName('btn');
+
+  // Remove the 'btn-primary' class from all buttons
+  for (const button of buttons) {
+    button.classList.remove('btn-primary');
+    button.classList.add('btn-light');
+  }
+  // Add 'btn-primary' class to the clicked button
+  clickedButton.classList.remove('btn-light');
+  clickedButton.classList.add('btn-primary');
+}
+const cookieString = document.cookie || '';
+
+// Check if the cookie you need is available in the 'cookies' object
+const url = "/createuse";
+const options = {
+method: 'GET',
+mode: 'cors',
+
+headers: {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+ 'Cookie': cookieString, 
+
+}
+};
+
+fetch(url, options)
+.then(response => response.json())
+.then(data => {
+  console.log('Response from server:', data);
+
+  // Assuming the server returns the leads data in the response as an array
+  const leads = data.data;
+
+  console.log('Lead data from server:', leads);
+
+  // Get the div where you want to display the leads
+  const newleadsDiv = document.getElementById('newleads');
+ // Clear the div to remove any previous content
+  newleadsDiv.innerHTML = '';
+  // Create an unordered list to hold the leads
+  const ul = document.createElement('ul');
+  leads.forEach(leadObj => {
+  const patient = leadObj.name;
+
+  // Create a span for each patient's name with a class for clickability
+  const patientSpan = document.createElement('span');
+  patientSpan.classList.add('f-w-600', 'd-block');
+  patientSpan.innerText = patient;
+
+  // Add a click event listener to the patient's name
+  patientSpan.addEventListener('click', () => {
+    // Call the function to populate the form with the lead's data
+    
+    populateForm(leadObj);
+  });
+
+  // Append the patient's name to the div
+  newleadsDiv.appendChild(patientSpan);
+  });
+})
+.catch(error => {
+  console.error('Error:', error);
+  // Handle any errors that occurred during the request
+});
+
+function populateForm(leadData) {
+  // Assuming each leadData object has the following properties based on the form fields:
+  const firstNameInput = document.getElementById('validationCustom01');
+  const lastNameInput = document.getElementById('validationCustom02');
+  const Age_months = document.getElementById('validationCustom07');
+  const petName= document.getElementById('validationCustom04');
+  const breed = document.getElementById('validationCustom09');
+  const pet_type = document.getElementById('validationCustom05');
+  //const petNameInput = document.getElementById('validationCustom01'); // Assuming the same ID is used for pet name input
+
+  // Assuming leadData contains the following properties
+  const firstName = leadData.first_name;
+  const lastName = leadData.name;
+  const dog_breed = leadData.breed;
+  const dog_age= leadData.age_months;
+  const pet_types=leadData.
+  //const petName = leadData.first_name;
+
+  // Populate the form fields with the lead's data
+  firstNameInput.value = firstName;
+  lastNameInput.value = lastName;
+  breed.value = dog_breed;
+  Age_months.value= dog_age;
+  //petNameInput.value = petName;
+}
+   
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Bootstrap js-->
   <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
