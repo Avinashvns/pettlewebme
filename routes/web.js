@@ -1,6 +1,6 @@
 import express from 'express'
 const router=express.Router()
-import { homeController } from '../controllers/homeController.js'
+import { homeController,lead} from '../controllers/homeController.js'
 import { bookingController } from '../controllers/bookingController.js'
 import { loginController,login,leads} from '../controllers/loginController.js'
 import { registerController } from '../controllers/registerController.js'
@@ -14,6 +14,7 @@ import {clientnewController} from '../controllers/clientnewController.js'
 // define Routes
 router.post('/createuser',login)
 router.get('/createuser',leads)
+router.get('/createuse',lead)
 router.get('/',homeController)
 router.get('/login', loginController)
 router.get('/register', registerController)
