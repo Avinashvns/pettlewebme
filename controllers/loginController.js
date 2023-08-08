@@ -1,17 +1,5 @@
-
 import axios from 'axios';
-function parseCookies(cookieString) {
-  const cookies = {};
-  if (cookieString) {
-    const cookieArr = cookieString.split(';');
-    for (const cookie of cookieArr) {
-      const [name, ...valueParts] = cookie.trim().split('=');
-      const value = valueParts.join('=');
-      cookies[name] = value;
-    }
-  }
-  return cookies;
-}
+
 const login= async (req,res)=>{ 
  await axios
   .post('http://172.190.62.52/api/method/login', {
@@ -35,8 +23,7 @@ const login= async (req,res)=>{
       // document.cookie = `${sid.trim()}=${value.trim()}; path=/`;
          });
     // console.log('Cookie:',rawCookieString);
-    }
-   // 
+    } 
    // res.status(200).json(response.data);
     return res.redirect('/')
    })
@@ -48,13 +35,12 @@ const login= async (req,res)=>{
   const leads = async (req, res) => {
     // Get the cookies from the incoming request
     const cookieString = req.headers.cookie || '';
-    const cookies = parseCookies(cookieString);
-  
+    //const cookies = parseCookies(cookieString);
+    //'http://172.190.62.52/api/resource/Lead'
     // Check if the cookie you need is available in the 'cookies' object
     if (cookieString) {
 
-
-       const response = await axios.get('http://172.190.62.52/api/resource/Lead', {
+       const response = await axios.get('http://172.190.62.52/api/resource/Patient Appointment?fields=["phone_number","patient","appointment_date"]', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -75,15 +61,13 @@ const login= async (req,res)=>{
       res.status(401).json({ error: 'Unauthorized' }); // Return an error response if the required cookie is missing
       }
   }  
+
 const loginController=(req,res)=>{
 
    res.render('login')
-
-const loginController=(req,res)=>{    
-    res.render('login',)
-
 }
 
 export { loginController ,login, leads }
+
 
 
