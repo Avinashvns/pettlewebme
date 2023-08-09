@@ -728,16 +728,16 @@
     </div>
   </div>
   <script>
-    // function handleOnboard() {
-    //   let validationCustom0 = document.getElementById('validationCustom0').value;
-    //   let validationCustom01 = document.getElementById('validationCustom01').value;
-    //   let validationCustom02 = document.getElementById('validationCustom02').value;
-    //   let validationCustom03 = document.getElementById('validationCustom03').value;
-    //   let validationCustom04 = document.getElementById('validationCustom04').value;
-    // }
+    function handleOnboard() {
+      let validationCustom0 = document.getElementById('validationCustom0').value;
+      let validationCustom01 = document.getElementById('validationCustom01').value;
+      let validationCustom02 = document.getElementById('validationCustom02').value;
+      let validationCustom03 = document.getElementById('validationCustom03').value;
+      let validationCustom04 = document.getElementById('validationCustom04').value;
+    }
  
 
-const cookieString = document.cookie || '';
+    const cookieString = document.cookie || '';
 
 // Check if the cookie you need is available in the 'cookies' object
 const url = "/createuse";
@@ -753,40 +753,68 @@ headers: {
 }
 };
 
-fetch(url, options)
-.then(response => response.json())
-.then(data => {
-  console.log('Response from server:', data);
 
-  // Assuming the server returns the leads data in the response as an array
-  const leads = data.data;
+ fetch(url, options)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Response from server:', data);
 
-  console.log('Lead data from server:', leads);
+    // Assuming the server returns the leads data in the response as an array
+    const leads = data.data;
 
-  // Get the div where you want to display the leads
-  const newleadsDiv = document.getElementById('newleads');
- // Clear the div to remove any previous content
-  newleadsDiv.innerHTML = '';
-  // Create an unordered list to hold the leads
-  const ul = document.createElement('ul');
+    console.log('Lead data from server:', leads);
 
-  // Iterate through the leads and create list items to display each lead
-  leads.forEach(leadObj => {
-      const patient = leadObj.name;
+    // Get the div where you want to display the leads
+    const newleadsDiv = document.getElementById('newleads');
+    // Clear the div to remove any previous content
+    newleadsDiv.innerHTML = '';
+
+    // Iterate through the leads and create media div for each lead
+    leads.forEach(leadObj => {
+      const firstName = leadObj.first_name;
+      const name = leadObj.name;
+      const status= leadObj.status;
       
-    // Create a list item for each lead
-    newleadsDiv.innerHTML += `<span class="f-w-600 d-block">${patient}</span>`;
-// Add the list item to the unordered list
+      // Create the outer media div
+      const mediaDiv = document.createElement('div');
+      mediaDiv.classList.add('media');
+      
+      // Create the media body for patient and phone number
+      const mediaBody1 = document.createElement('div');
+      mediaBody1.classList.add('media-body', 'col-lg-9', 'col-md-6');
+      
+      const patientSpan = document.createElement('span');
+      patientSpan.classList.add('f-w-600', 'd-block');
+      patientSpan.innerText = name;
+      
+      const phoneSpan = document.createElement('span');
+      phoneSpan.classList.add('d-block');
+      phoneSpan.innerHTML = ` ${firstName}`;
+      
+      mediaBody1.appendChild(patientSpan);
+      mediaBody1.appendChild(phoneSpan);
+      
+      // Create the media body for appointment date
+      const mediaBody2 = document.createElement('div');
+      mediaBody2.classList.add('media-body', 'col-lg-3', 'col-md-6', 'text-end');
+      
+      const dateSpan = document.createElement('span');
+      dateSpan.classList.add('f-w-600', 'text-success');
+      dateSpan.innerText = status;
+      
+      mediaBody2.appendChild(dateSpan);
+      
+      // Append both media bodies to the media div
+      mediaDiv.appendChild(mediaBody1);
+      mediaDiv.appendChild(mediaBody2);
+      // Add the media div to the unordered list
+      newleadsDiv.appendChild(mediaDiv);
+    });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle any errors that occurred during the request
   });
-
-  // Add the unordered list with all leads to the div
-  newleadsDiv.appendChild(ul);
-})
-.catch(error => {
-  console.error('Error:', error);
-  // Handle any errors that occurred during the request
-});
-
 
   </script>
   <!-- latest jquery-->
