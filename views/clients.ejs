@@ -963,45 +963,73 @@ headers: {
 }
 };
 
-fetch(url, options)
-.then(response => response.json())
-.then(data => {
-  console.log('Response from server:', data);
 
-  // Assuming the server returns the leads data in the response as an array
-  const leads = data.data;
+ fetch(url, options)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Response from server:', data);
 
-  console.log('Lead data from server:', leads);
+    // Assuming the server returns the leads data in the response as an array
+    const leads = data.data;
 
-  // Get the div where you want to display the leads
-  const newleadsDiv = document.getElementById('newleads');
- // Clear the div to remove any previous content
-  newleadsDiv.innerHTML = '';
-  // Create an unordered list to hold the leads
-  const ul = document.createElement('ul');
-  leads.forEach(leadObj => {
-  const patient = leadObj.name;
+    console.log('Lead data from server:', leads);
 
-  // Create a span for each patient's name with a class for clickability
-  const patientSpan = document.createElement('span');
-  patientSpan.classList.add('f-w-600', 'd-block');
-  patientSpan.innerText = patient;
+    // Get the div where you want to display the leads
+    const newleadsDiv = document.getElementById('newleads');
+    // Clear the div to remove any previous content
+    newleadsDiv.innerHTML = '';
 
-  // Add a click event listener to the patient's name
-  patientSpan.addEventListener('click', () => {
+    // Iterate through the leads and create media div for each lead
+    leads.forEach(leadObj => {
+      const firstName = leadObj.first_name;
+      const name = leadObj.name;
+      const status= leadObj.status;
+      
+      // Create the outer media div
+      const mediaDiv = document.createElement('div');
+      mediaDiv.classList.add('media');
+      
+      // Create the media body for patient and phone number
+      const mediaBody1 = document.createElement('div');
+      mediaBody1.classList.add('media-body', 'col-lg-9', 'col-md-6');
+      
+      const patientSpan = document.createElement('span');
+      patientSpan.classList.add('f-w-600', 'd-block');
+      patientSpan.innerText = name;
+      
+      const phoneSpan = document.createElement('span');
+      phoneSpan.classList.add('d-block');
+      phoneSpan.innerHTML = `<i class="icofont icofont-ui-call"></i> ${firstName}`;
+      
+      mediaBody1.appendChild(patientSpan);
+      mediaBody1.appendChild(phoneSpan);
+      
+      // Create the media body for appointment date
+      const mediaBody2 = document.createElement('div');
+      mediaBody2.classList.add('media-body', 'col-lg-3', 'col-md-6', 'text-end');
+      
+      const dateSpan = document.createElement('span');
+      dateSpan.classList.add('f-w-600', 'text-success');
+      dateSpan.innerText = status;
+      
+      mediaBody2.appendChild(dateSpan);
+      
+      // Append both media bodies to the media div
+      mediaDiv.appendChild(mediaBody1);
+      mediaDiv.appendChild(mediaBody2);
+      mediaDiv.addEventListener('click', () => {
     // Call the function to populate the form with the lead's data
     
     populateForm(leadObj);
+  })
+      // Add the media div to the unordered list
+      newleadsDiv.appendChild(mediaDiv);
+    });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle any errors that occurred during the request
   });
-
-  // Append the patient's name to the div
-  newleadsDiv.appendChild(patientSpan);
-  });
-})
-.catch(error => {
-  console.error('Error:', error);
-  // Handle any errors that occurred during the request
-});
 
 function populateForm(leadData) {
   // Assuming each leadData object has the following properties based on the form fields:
@@ -1018,7 +1046,7 @@ function populateForm(leadData) {
   const lastName = leadData.name;
   const dog_breed = leadData.breed;
   const dog_age= leadData.age_months;
-  const pet_types=leadData.
+  //const pet_types=leadData.
   //const petName = leadData.first_name;
 
   // Populate the form fields with the lead's data
