@@ -565,25 +565,7 @@
                           <span class="f-w-600 text-success ">$300.00</span>
                         </div>
                       </div>
-                      <div class="media"><img class="img-50 rounded-circle m-r-15" src="/images/user/3.png" alt="">
-                        <!-- <div class="social-status social-offline"></div> -->
-                        <div class="media-body col-lg-9 col-md-9 "><span class="f-w-600 d-block">Leslie
-                            & Monk</span><span class="d-block"><i class="icofont icofont-ui-call"></i> 9191616161</span>
-                          <span class="d-block">3 hours ago</span>
-                        </div>
-                        <div class="media-body col-lg-3 col-md-3 bg-dark text-end">
-                          <span class="f-w-600 text-success ">$900.00</span>
-                        </div>
-                      </div>
-                      <div class="media"><img class="img-50 rounded-circle m-r-15" src="/images/user/3.png" alt="">
-                        <div class="media-body col-lg-6 col-sm-9 "><span class="f-w-600 d-block">Leslie
-                            & Monk</span><span class="d-block"><i class="icofont icofont-ui-call"></i> 9191515151</span>
-                          <span class="d-block">3 hours ago</span>
-                        </div>
-                        <div class="media-body col-lg-7 col-sm-6 bg-danger ">
-                          <span class="f-w-600 text-success">01/06/2022</span>
-                        </div>
-                      </div>
+                   
                       <br>
                     </div>
                   </div>
@@ -753,10 +735,19 @@
       let validationCustom03 = document.getElementById('validationCustom03').value;
       let validationCustom04 = document.getElementById('validationCustom04').value;
     }
+
+ 
+
+    const cookieString = document.cookie || '';
+
+// Check if the cookie you need is available in the 'cookies' object
+const url = "/createuse";
+
     const cookieString = document.cookie || '';
 
 // Check if the cookie you need is available in the 'cookies' object
 const url = "/createuser";
+
 const options = {
 method: 'GET',
 mode: 'cors',
@@ -787,9 +778,15 @@ headers: {
 
     // Iterate through the leads and create media div for each lead
     leads.forEach(leadObj => {
+
+      const firstName = leadObj.first_name;
+      const name = leadObj.name;
+      const status= leadObj.status;
+
       const phone = leadObj.phone_number;
       const patient = leadObj.patient;
       const appointmentDate = leadObj.appointment_date;
+
       
       // Create the outer media div
       const mediaDiv = document.createElement('div');
@@ -801,11 +798,19 @@ headers: {
       
       const patientSpan = document.createElement('span');
       patientSpan.classList.add('f-w-600', 'd-block');
+
+      patientSpan.innerText = name;
+      
+      const phoneSpan = document.createElement('span');
+      phoneSpan.classList.add('d-block');
+      phoneSpan.innerHTML = ` ${firstName}`;
+
       patientSpan.innerText = patient;
       
       const phoneSpan = document.createElement('span');
       phoneSpan.classList.add('d-block');
       phoneSpan.innerHTML = `<i class="icofont icofont-ui-call"></i> ${phone}`;
+
       
       mediaBody1.appendChild(patientSpan);
       mediaBody1.appendChild(phoneSpan);
@@ -816,14 +821,18 @@ headers: {
       
       const dateSpan = document.createElement('span');
       dateSpan.classList.add('f-w-600', 'text-success');
+
+      dateSpan.innerText = status;
+
       dateSpan.innerText = appointmentDate;
+
       
       mediaBody2.appendChild(dateSpan);
       
       // Append both media bodies to the media div
       mediaDiv.appendChild(mediaBody1);
       mediaDiv.appendChild(mediaBody2);
-      
+
       // Add the media div to the unordered list
       newleadsDiv.appendChild(mediaDiv);
     });
@@ -832,8 +841,6 @@ headers: {
     console.error('Error:', error);
     // Handle any errors that occurred during the request
   });
-
-   
 
 
   </script>

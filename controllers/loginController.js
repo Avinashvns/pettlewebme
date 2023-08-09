@@ -23,8 +23,7 @@ const login= async (req,res)=>{
       // document.cookie = `${sid.trim()}=${value.trim()}; path=/`;
          });
     // console.log('Cookie:',rawCookieString);
-    }
-   // 
+    } 
    // res.status(200).json(response.data);
     return res.redirect('/')
    })
@@ -62,9 +61,11 @@ const login= async (req,res)=>{
       res.status(401).json({ error: 'Unauthorized' }); // Return an error response if the required cookie is missing
       }
   }  
+
 const loginController=(req,res)=>{
 
    res.render('login')
 }
 
 export { loginController ,login, leads }
+
