@@ -69,5 +69,3 @@ const loginController=(req,res)=>{
 
 export { loginController ,login, leads }
 
-
-

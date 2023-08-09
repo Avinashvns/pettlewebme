@@ -1,3 +1,4 @@
+
  //'http://172.190.62.52/api/resource/Lead'
  // http://172.190.62.52/api/resource/Patient Appointment?fields=["phone_number","patient","appointment_date"]
  // http://172.190.62.52/api/resource/Lead?fields=[%22first_name%22,%20%22name%22,%22w[…]ars%22,%22age_months%22,%22breed%22,%22gender%22,%22status%22]
@@ -42,6 +43,9 @@ const lead = async (req, res) => {
 
 
 const homeController=(req,res)=>{
+
+ const homeController=(req,res)=>{
+
     
     const data = {
         name: 'johan', // Replace this with dynamic data from your application

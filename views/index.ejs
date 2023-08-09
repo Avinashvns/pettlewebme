@@ -262,16 +262,16 @@
             </li>
             <li class="profile-nav onhover-dropdown pe-0 py-0">
               <div class="media profile-media"><img class="b-r-10" src="/images/dashboard/profile.png" alt="">
-                <div class="media-body"><span>Emay Walter</span>
+                <div class="media-body"><span> <%= name %></span>
                   <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
                 </div>
               </div>
-              <ul class="profile-dropdown onhover-show-div">
+              <ul class="profile-dropdown onhover-show-div" method="GET" action="/actioncenter">
                 <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
                 <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
                 <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
                 <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
-                <li><a href="#"><i data-feather="log-in"> </i><span>Log in</span></a></li>
+                <li><a href="#"><i data-feather="log-in" type="submit" id="Logout" name="Logout" ></i><span>Log out</span></a></li>
               </ul>
             </li>
           </ul>
@@ -538,7 +538,7 @@
                     <div class="media media-wrapper">
                       <div class="media-body">
                         <div class="greeting-user">
-                          <h4 class="text-white f-w-600">Welcome ${data.full_name}</h4>
+                          <h4 class="text-white f-w-600">Welcome <%= name %></h4>
                           <p class="text-white">Here`s your Pettle Dashboard</p>
                           <!-- <div class="whatsnew-btn"><a class="btn btn-outline-white">Whats New !</a></div> -->
                         </div>
@@ -602,7 +602,7 @@
                                     <div class="user-box"><i class="font-primary" data-feather="user-plus"></i></div>
                                   </div>
                                   <div>
-                                    <h5 class="mb-1">17</h5><span class="font-primary d-flex align-items-center"><i
+                                    <h5 class="mb-1"><%=Available%></h5><span class="font-primary d-flex align-items-center"><i
                                         class="icon-arrow-up icon-rotate me-1"> </i><span
                                         class="f-w-500">Available</span></span>
                                   </div>
@@ -612,7 +612,7 @@
                                     <div class="user-box"><i class="font-success" data-feather="user-minus"></i></div>
                                   </div>
                                   <div>
-                                    <h5 class="mb-1">18</h5><span class="font-danger d-flex align-items-center"><i
+                                    <h5 class="mb-1"><%=Occupied%></h5><span class="font-danger d-flex align-items-center"><i
                                         class="icon-arrow-down icon-rotate me-1"></i><span
                                         class="f-w-500">Occupied</span></span>
                                   </div>
@@ -621,19 +621,20 @@
                             </div>
                           </div>
                         </div>
+                       
 
                       </div>
                       </br>
                       <h5>Upcoming Check-in</h5><br>
-                      <div class="media">
-                        <img class="img-50 rounded-circle m-r-15" src="/images/user/2.png" alt="">
-                        <!-- <div class="social-status social-online"></div> -->
-                        <div class="media-body col-lg-9 col-md-6 "><span class="f-w-600 d-block">Jane Cooper</span>
+                      <div>
+                        <div id="newleads"></div>
+                      <div class="media"> 
+                        <div class="media-body col-lg-9 col-md-6 " ><span class="f-w-600 d-block">Test pet</span>
                           <span class="d-block"><i class="icofont icofont-ui-call"></i>
-                            9191919191</span><span class="d-block">10 minutes ago</span>
+                            123456789</span>
                         </div>
                         <div class="media-body col-lg-3 col-md-6 text-end">
-                          <span class="f-w-600 text-success ">$200.00</span>
+                          <span class="f-w-600 text-success ">2023-07-29</span>
                         </div>
                       </div>
                       <div class="media"><img class="img-50 rounded-circle m-r-15" src="/images/user/8.jpg" alt="">
@@ -675,6 +676,7 @@
                       </div>
                     </div>
                   </div>
+                </div>
                 </div>
 
                 <div class="card">
@@ -731,7 +733,7 @@
                       </div>
                       <div class="social-content">
                         <div>
-                          <h5 class="mb-1">12,098</h5>
+                          <h5 class="mb-1"><%=Booking_Requests%></h5>
                           <!-- <span class="f-light ">NewBookings!</span> -->
                         </div>
                         <div class="social-chart">
@@ -753,7 +755,7 @@
                       </div>
                       <div class="social-content">
                         <div>
-                          <h5 class="mb-1">15,080</h5>
+                          <h5 class="mb-1"><%=New_Client_Enquiries%></h5>
                           <!-- <span class="f-light">Followers</span> -->
                         </div>
                         <div class="social-chart">
@@ -775,7 +777,7 @@
                       </div>
                       <div class="social-content">
                         <div>
-                          <h5 class="mb-1">12,564</h5>
+                          <h5 class="mb-1"><%=Onboarded_Clients%></h5>
                           <!-- <span class="f-light">Followers</span> -->
                         </div>
                         <div class="social-chart">
@@ -797,7 +799,7 @@
                       </div>
                       <div class="social-content">
                         <div>
-                          <h5 class="mb-1">68,954</h5>
+                          <h5 class="mb-1"><%=Payments%></h5>
                           <!-- <span class="f-light">Followers</span> -->
                         </div>
                         <div class="social-chart">
@@ -853,6 +855,143 @@
       </footer>
     </div>
   </div>
+  <script>
+     const cookieString = document.cookie || '';
+
+// Check if the cookie you need is available in the 'cookies' object
+const url = "/createuser";
+const options = {
+method: 'GET',
+mode: 'cors',
+
+headers: {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+ 'Cookie': cookieString, 
+
+}
+};
+
+
+ fetch(url, options)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Response from server:', data);
+
+    // Assuming the server returns the leads data in the response as an array
+    const leads = data.data;
+
+    console.log('Lead data from server:', leads);
+
+    // Get the div where you want to display the leads
+    const newleadsDiv = document.getElementById('newleads');
+    // Clear the div to remove any previous content
+    newleadsDiv.innerHTML = '';
+
+    // Iterate through the leads and create media div for each lead
+    leads.forEach(leadObj => {
+      const phone = leadObj.phone_number;
+      const patient = leadObj.patient;
+      const appointmentDate = leadObj.appointment_date;
+      
+      // Create the outer media div
+      const mediaDiv = document.createElement('div');
+      mediaDiv.classList.add('media');
+      
+      // Create the media body for patient and phone number
+      const mediaBody1 = document.createElement('div');
+      mediaBody1.classList.add('media-body', 'col-lg-9', 'col-md-6');
+      
+      const patientSpan = document.createElement('span');
+      patientSpan.classList.add('f-w-600', 'd-block');
+      patientSpan.innerText = patient;
+      
+      const phoneSpan = document.createElement('span');
+      phoneSpan.classList.add('d-block');
+      phoneSpan.innerHTML = `<i class="icofont icofont-ui-call"></i> ${phone}`;
+      
+      mediaBody1.appendChild(patientSpan);
+      mediaBody1.appendChild(phoneSpan);
+      
+      // Create the media body for appointment date
+      const mediaBody2 = document.createElement('div');
+      mediaBody2.classList.add('media-body', 'col-lg-3', 'col-md-6', 'text-end');
+      
+      const dateSpan = document.createElement('span');
+      dateSpan.classList.add('f-w-600', 'text-success');
+      dateSpan.innerText = appointmentDate;
+      
+      mediaBody2.appendChild(dateSpan);
+      
+      // Append both media bodies to the media div
+      mediaDiv.appendChild(mediaBody1);
+      mediaDiv.appendChild(mediaBody2);
+      
+      // Add the media div to the unordered list
+      newleadsDiv.appendChild(mediaDiv);
+    });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle any errors that occurred during the request
+  });
+
+
+   /* const cookieString = document.cookie || '';
+
+// Check if the cookie you need is available in the 'cookies' object
+const url = "/createuser";
+const options = {
+method: 'GET',
+mode: 'cors',
+
+headers: {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+ 'Cookie': cookieString, 
+
+}
+};
+
+fetch(url, options)
+.then(response => response.json())
+.then(data => {
+  console.log('Response from server:', data);
+
+  // Assuming the server returns the leads data in the response as an array
+  const leads = data.data;
+
+  console.log('Lead data from server:', leads);
+
+  // Get the div where you want to display the leads
+  const newleadsDiv = document.getElementById('newleads');
+ // Clear the div to remove any previous content
+  newleadsDiv.innerHTML = '';
+  // Create an unordered list to hold the leads
+  const ul = document.createElement('ul');
+
+  // Iterate through the leads and create list items to display each lead
+  leads.forEach(leadObj => {
+    const phone = leadObj.phone_number;
+      const patient = leadObj.patient;
+      const appointmentDate = leadObj.appointment_date;
+    // Create a list item for each lead
+    const li = document.createElement('li');
+    li.innerText = `Phone: ${phone}, Patient: ${patient}, Appointment Date: ${appointmentDate}`;
+// Add the list item to the unordered list
+    ul.appendChild(li);
+  });
+
+  // Add the unordered list with all leads to the div
+  newleadsDiv.appendChild(ul);
+})
+.catch(error => {
+  console.error('Error:', error);
+  // Handle any errors that occurred during the request
+});*/
+
+
+  </script>
   <!-- latest jquery-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Bootstrap js-->
